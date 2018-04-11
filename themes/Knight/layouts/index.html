@@ -4,8 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1">
     <title>{{ .Site.Title }}</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="shortcut icon" href="favicon.ico" type="img/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -35,7 +49,7 @@
         <figure class="logo animated fadeInDown delay-07s">
           <a href="#"><img src="img/logo.png" alt=""></a>
         </figure>
-        <h1 class="animated fadeInDown delay-07s">{{ .Site.Title }}</h1>
+        <!--h1 class="animated fadeInDown delay-07s">{{ .Site.Title }}</h1-->
         <ul class="we-create animated fadeInUp delay-1s">
           <li>Excelência no desenvolvimento de softwares e otimização de processos</li>
         </ul>
@@ -227,7 +241,7 @@
         <span class="copyright">&copy; Tema Knight. Todos os direitos reservados</span>
         <div class="credits">
           <!--
-            All the links in the footer should remain intact. 
+            All the links in the footer should remain intact.
             You can delete the links only if you purchased the pro version.
             Licensing information: https://bootstrapmade.com/license/
             Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Knight
@@ -238,80 +252,80 @@
     </footer>
     <script type="text/javascript">
       $(document).ready(function(e) {
-      	$('#test').scrollToFixed();
-      	$('.res-nav_click').click(function() {
-      		$('.main-nav').slideToggle();
-      		return false  
-      	}); 
+        $('#test').scrollToFixed();
+        $('.res-nav_click').click(function() {
+          $('.main-nav').slideToggle();
+          return false
+        });
       });
     </script>
     <script>
       wow = new WOW({
-      	animateClass: 'animated',
-      	offset: 100
+        animateClass: 'animated',
+        offset: 100
       });
       wow.init();
     </script>
     <script type="text/javascript">
       $(window).load(function() {
-      	$('.main-nav li a, .servicelink').bind('click', function(event) {
-      		var $anchor = $(this);
-      		$('html, body').stop().animate({
-      			scrollTop: $($anchor.attr('href')).offset().top - 102
-      		}, 1500, 'easeInOutExpo');
-      		/*
-      		if you don't want to use the easing effects:
-      		$('html, body').stop().animate({
-      			scrollTop: $($anchor.attr('href')).offset().top
-      		}, 1000);
-      		*/
-      		if ($(window).width() < 768) {
-      			$('.main-nav').hide();
-      		}
-      		event.preventDefault();
-      	});
+        $('.main-nav li a, .servicelink').bind('click', function(event) {
+          var $anchor = $(this);
+          $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top - 102
+          }, 1500, 'easeInOutExpo');
+          /*
+          if you don't want to use the easing effects:
+          $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+          }, 1000);
+          */
+          if ($(window).width() < 768) {
+            $('.main-nav').hide();
+          }
+          event.preventDefault();
+        });
       })
     </script>
     <script type="text/javascript">
       $(window).load(function() {
-      
-      	var $container = $('.portfolioContainer'),
-      		$body = $('body'),
-      		colW = 375,
-      		columns = null;
-      
-      	$container.isotope({
-      		// disable window resizing
-      		resizable: true,
-      		masonry: {
-      			columnWidth: colW
-      		}
-      	});
-      
-      	$(window).smartresize(function() {
-      		// check if columns has changed
-      		var currentColumns = Math.floor(($body.width() - 30) / colW);
-      		if (currentColumns !== columns) {
-      			// set new column count
-      			columns = currentColumns;
-      			// apply width to container manually, then trigger relayout
-      			$container.width(columns * colW)
-      				.isotope('reLayout');
-      		}
-      
-      	}).smartresize(); // trigger resize to set container width
-      	$('.portfolioFilter a').click(function() {
-      		$('.portfolioFilter .current').removeClass('current');
-      		$(this).addClass('current');
-      
-      		var selector = $(this).attr('data-filter');
-      		$container.isotope({
-      
-      			filter: selector,
-      		});
-      		return false;
-      	});
-      
+
+        var $container = $('.portfolioContainer'),
+          $body = $('body'),
+          colW = 375,
+          columns = null;
+
+        $container.isotope({
+          // disable window resizing
+          resizable: true,
+          masonry: {
+            columnWidth: colW
+          }
+        });
+
+        $(window).smartresize(function() {
+          // check if columns has changed
+          var currentColumns = Math.floor(($body.width() - 30) / colW);
+          if (currentColumns !== columns) {
+            // set new column count
+            columns = currentColumns;
+            // apply width to container manually, then trigger relayout
+            $container.width(columns * colW)
+              .isotope('reLayout');
+          }
+
+        }).smartresize(); // trigger resize to set container width
+        $('.portfolioFilter a').click(function() {
+          $('.portfolioFilter .current').removeClass('current');
+          $(this).addClass('current');
+
+          var selector = $(this).attr('data-filter');
+          $container.isotope({
+
+            filter: selector,
+          });
+          return false;
+        });
+
       });
     </script>
   </body>
