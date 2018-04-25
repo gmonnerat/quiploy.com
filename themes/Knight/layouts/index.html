@@ -210,7 +210,7 @@
             <div class="form">
               <div id="sendmessage">Sua mensagem foi enviada. Obrigado!</div>
               <div id="errormessage"></div>
-              <form method="POST" role="form" class="contactForm" netlify>
+              <form method="POST" role="form" class="contactForm">
                 <div class="form-group">
                   <input type="text" name="name" class="form-control input-text" id="name" placeholder="Nome" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                   <div class="validation"></div>
@@ -227,7 +227,8 @@
                   <textarea class="form-control input-text text-area" name="message" rows="5" data-rule="required" data-msg="Por favor envie uma mensagem para nós" placeholder="Mensagem"></textarea>
                   <div class="validation"></div>
                 </div>
-                 <div data-netlify-recaptcha></div>
+                <div data-netlify-recaptcha></div>
+                <br/>
                 <div class="text-center"><button type="submit" class="input-btn">Enviar Mensagem</button></div>
               </form>
             </div>
