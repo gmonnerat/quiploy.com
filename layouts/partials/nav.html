@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="container nav-inner">
+    <a class="brand" href="#topo">
+      <img src="/img/logo.png" alt="Quiploy" width="120" height="40">
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="visually-hidden">Abrir menu</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <nav id="menu" class="nav-menu" aria-label="Navegação principal">
+      <ul>
+        {{ range .Site.Menus.main }}
+        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+</header>
