@@ -80,7 +80,6 @@
   --step-0:  clamp(1rem, 0.975rem + 0.13vw, 1.0625rem);
   --step-1:  clamp(1.125rem, 1.08rem + 0.22vw, 1.25rem);
   --step-2:  clamp(1.3125rem, 1.22rem + 0.46vw, 1.5625rem);
-  --step-3:  clamp(1.5rem, 1.32rem + 0.9vw, 2rem);
   --step-4:  clamp(1.9375rem, 1.6rem + 1.85vw, 2.875rem);
   --step-5:  clamp(2.4375rem, 1.62rem + 4.1vw, 4.25rem);
 
@@ -91,7 +90,6 @@
   --sp-s:   1rem;
   --sp-m:   1.5rem;
   --sp-l:   2.25rem;
-  --sp-xl:  3.25rem;
   --sp-section: clamp(3.5rem, 8vw, 6.5rem);
   --sp-gutter: clamp(1.25rem, 4vw, 2.5rem);
 
@@ -227,8 +225,6 @@ a:hover {
 
 .section-alt { background: var(--alt); }
 
-.section-dark { background: var(--bg); color: var(--fg); }
-
 .section-title {
   font-size: var(--step-4);
   max-width: 22ch;
@@ -241,6 +237,9 @@ a:hover {
 }
 
 .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* The form is the working half of Contato; give it the wider column. */
+.section-dark .grid-2 { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
 
 .page-narrow {
   display: flex;
@@ -509,8 +508,6 @@ a:hover {
   font-size: var(--step-1);
 }
 
-.contato-info a { color: var(--accent); }
-
 .social {
   display: flex;
   flex-wrap: wrap;
@@ -547,9 +544,6 @@ a:hover {
   resize: vertical;
   min-height: 8rem;
 }
-
-.contato-form input::placeholder,
-.contato-form textarea::placeholder { color: #6b7a74; }
 
 /* Two rings: an ink ring on the white field, an accent halo on the ground
    behind it — visible whichever side the field sits against. */
@@ -638,6 +632,14 @@ a:hover {
 
   .nav-menu.is-open { display: block; }
 
+  html:not(.js) .nav-toggle { display: none; }
+  html:not(.js) .nav-menu {
+    display: block;
+    position: static;
+    box-shadow: none;
+    border-bottom: 0;
+  }
+
   .nav-menu ul {
     flex-direction: column;
     align-items: stretch;
@@ -656,6 +658,7 @@ a:hover {
 
   .nav-menu a:hover { border-bottom: 0; }
 
+  .section-dark .grid-2,
   .grid-2 { grid-template-columns: minmax(0, 1fr); }
 
   .hero h1 { max-width: 16ch; }
@@ -663,9 +666,4 @@ a:hover {
   .brand img { height: 38px; }
 
   .page-narrow { min-height: 0; }
-}
-
-@media (min-width: 721px) {
-  /* The form is the working half of Contato; give it the wider column. */
-  .section-dark .grid-2 { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
 }

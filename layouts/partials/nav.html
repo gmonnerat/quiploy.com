@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="container nav-inner">
-    <a class="brand" href="#topo">
+    <a class="brand" href="{{ if .IsHome }}#topo{{ else }}/{{ end }}">
       <img src="/img/logo.png" alt="Quiploy" width="120" height="90">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu">
@@ -12,7 +12,7 @@
     <nav id="menu" class="nav-menu" aria-label="Navegação principal">
       <ul>
         {{ range .Site.Menus.main }}
-        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+        <li><a href="{{ if $.IsHome }}{{ .URL }}{{ else }}{{ printf "/%s" .URL }}{{ end }}">{{ .Name }}</a></li>
         {{ end }}
       </ul>
     </nav>

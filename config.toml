@@ -2,7 +2,8 @@ baseURL = "https://www.quiploy.com/"
 languageCode = "pt-br"
 title = "Quiploy"
 enableRobotsTXT = true
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy", "term", "RSS"]
+disableHugoGeneratorInject = true
 
 [params]
   description = "Software sob medida e automação de processos para operações brasileiras."

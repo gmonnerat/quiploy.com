@@ -2,62 +2,74 @@
 
 ## Project Overview
 
-Quiploy.com is a single-page landing website for a software development services company. Built with Hugo static site generator using the Knight Bootstrap theme (from BootstrapMade). Content is in Portuguese (pt-BR).
+Quiploy.com is a single-page marketing site for a software-development
+services company (Python/Django). Hugo static site, custom theme, content
+in Portuguese (pt-BR). Hosted on Netlify; DNS at GoDaddy.
 
 ## Tech Stack
 
-- **Static site generator:** Hugo (min v0.36)
-- **CSS framework:** Bootstrap 3
-- **JavaScript:** jQuery 1.8.3, WOW.js (scroll animations), Isotope (grid layout), jQuery Easing
-- **Animations:** Animate.css + WOW.js for scroll-triggered effects
-- **Icons:** Font Awesome
-- **Fonts:** Google Fonts (Montserrat, Open Sans)
-- **Contact form backend:** Heroku app (XHR POST with CORS)
-- **Analytics:** Google Tag Manager (UA-118263902-1)
+- **Generator:** Hugo (extended) ≥ 0.128 — the only build tool, no npm
+- **CSS:** one hand-authored stylesheet, `assets/css/main.css` (CSS custom
+  properties, flex/grid, no framework)
+- **JS:** `assets/js/site.js` — ~20 lines of vanilla JS, mobile nav toggle
+  only; the page works fully with JS disabled
+- **Fonts:** Fraunces + Inter, self-hosted from `static/fonts/` via
+  `@font-face` in `main.css` (no Google Fonts request)
+- **Contact form:** Netlify Forms (`data-netlify="true"`), no backend code
+- **Analytics:** none
 
 ## Project Structure
 
 ```
-quiploy.com/
-├── config.toml              # Hugo config (baseURL, title, theme)
-├── content/                 # Hugo content (empty - all content in templates)
-└── themes/Knight/
-    ├── layouts/
-    │   ├── index.html       # Main single-page template (all site content)
-    │   ├── 404.html         # Error page
-    │   └── _default/        # Default layouts (unused)
-    ├── static/
-    │   ├── css/             # Bootstrap, Animate.css, custom styles
-    │   ├── js/              # jQuery, plugins, contact form handler
-    │   ├── fonts/           # Font Awesome font files
-    │   └── img/             # Favicons, mockups, backgrounds, logos
-    └── theme.toml           # Theme metadata
+config.toml              # Hugo config: params, main menu, minify (keepQuotes)
+netlify.toml             # build command, HUGO_VERSION pin, headers
+scripts/audit.sh         # post-build assertion checks (see Verification)
+data/
+  servicos.yaml          # service cards
+  cases.yaml             # cases: `destaque` (named) + `outros` (anonymized)
+content/
+  obrigado.md            # /obrigado/ thank-you page body
+layouts/
+  index.html             # home: composes section partials
+  404.html               # styled 404
+  robots.txt             # robots template (Sitemap line)
+  _default/single.html   # layout for /obrigado/
+  partials/              # head, nav, hero, servicos, sobre, cases, contato, footer
+assets/
+  css/main.css           # entire stylesheet (Hugo-fingerprinted + SRI)
+  js/site.js             # mobile nav toggle
+static/
+  img/                   # favicons + logo.png
+  fonts/                 # Fraunces + Inter woff2
 ```
 
 ## Build & Development
 
-No package.json or build tooling. Hugo is the only build tool.
-
 ```bash
-# Local development server
-hugo serve
-
-# Production build (outputs to /public)
-hugo
+hugo server            # local dev at http://localhost:1313
+hugo --gc --minify     # production build → public/
+bash scripts/audit.sh  # run the assertion checks against public/
 ```
 
-## Key Files
+Netlify runs `hugo --gc --minify && bash scripts/audit.sh`.
 
-- `config.toml` - Hugo site configuration (baseURL: https://www.quiploy.com)
-- `themes/Knight/layouts/index.html` - The entire site content and layout (340 lines)
-- `themes/Knight/static/css/style.css` - Custom theme styles
-- `themes/Knight/static/css/responsive.css` - Media query breakpoints
-- `themes/Knight/static/js/send_contact_form.js` - Contact form submission logic
+## Conventions / Constraints
 
-## Architecture Notes
+- All copy is Portuguese (pt-BR); `languageCode = "pt-br"`.
+- **Client names on the site:** only `Tríade Patologia Veterinária`,
+  `Clínica Marcela Monnerat`, `Hidrocenter`, `Donna Laser` may be named.
+  All other client work is described by sector only, never named.
+- No jQuery/Bootstrap/analytics — `scripts/audit.sh` fails the build if any
+  reappear.
+- Service and case copy live in `data/*.yaml`; partials range over them.
+- CSS/JS go through Hugo's asset pipeline (minify + fingerprint + SRI).
+- One responsive breakpoint at 720px; motion is CSS-only and respects
+  `prefers-reduced-motion`.
+- Design spec: `docs/superpowers/specs/2026-09-06-quiploy-rebuild-design.md`
+- Contact CNPJ 23.612.194/0001-81 · contato@quiploy.com · +55 21 99909-5870
 
-- All page content is hardcoded in `index.html` template (no separate content files)
-- Navigation uses anchor links (#service, #contact) with smooth scroll
-- Responsive breakpoints: desktop (992px+), tablet (768-991px), mobile (<767px)
-- Contact form uses base64-encoded backend URL decoded at runtime via `atob()`
-- No testing framework, linting, or CI/CD configured
+## Known follow-ups
+
+- `logo.png` is a white-on-transparent mark shown via a `filter: brightness(0)`
+  workaround in `main.css`; replace with a dark/SVG logo and drop the filter
+  (also unblocks an `og:image`).

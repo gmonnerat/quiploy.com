@@ -257,7 +257,7 @@ No test framework exists and none is added (static marketing page). Verification
 
 ## 9. Security note (unrelated to this work)
 
-Every sibling repo under `/home/gabriel/workspace/` has a GitHub Personal
-Access Token embedded in its `git remote` URL. That token should be revoked
-and remotes re-pointed to SSH or a credential helper. Not part of this
+During the rebuild, credentials were noticed in local git configuration on
+the development machine. Rotate any credentials that are stored outside a
+credential manager and re-point the affected remotes. Out of scope for this
 rebuild; flagged for follow-up.

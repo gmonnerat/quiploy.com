@@ -1,5 +1,5 @@
 [build]
-  command = "hugo --gc --minify"
+  command = "hugo --gc --minify && bash scripts/audit.sh"
   publish = "public"
 
 [build.environment]
@@ -11,6 +11,7 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
 [[headers]]
   for = "/css/*"
@@ -25,4 +26,9 @@
 [[headers]]
   for = "/fonts/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

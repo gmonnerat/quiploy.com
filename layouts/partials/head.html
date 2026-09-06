@@ -1,13 +1,18 @@
 <head>
+  <script>document.documentElement.classList.add('js')</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ .Site.Title }} — Desenvolvimento de software e automação de processos{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+  {{ $pageTitle := printf "%s — %s" .Title .Site.Title }}
+  {{ if .IsHome }}{{ $pageTitle = printf "%s — Desenvolvimento de software e automação de processos" .Site.Title }}{{ else if eq .Kind "404" }}{{ $pageTitle = printf "Página não encontrada — %s" .Site.Title }}{{ end }}
+  <title>{{ $pageTitle }}</title>
   <meta name="description" content="{{ .Site.Params.description }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ if not .IsHome }}<meta name="robots" content="noindex">{{ end }}
 
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#f8faf9">
 
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/fraunces-latin.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin.woff2">
@@ -18,7 +23,7 @@
   {{ $js := resources.Get "js/site.js" | minify | fingerprint "sha512" }}
   <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 
-  <meta property="og:title" content="{{ .Site.Title }}">
+  <meta property="og:title" content="{{ $pageTitle }}">
   <meta property="og:description" content="{{ .Site.Params.description }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ .Permalink }}">
