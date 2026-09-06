@@ -15,7 +15,10 @@ in Portuguese (pt-BR). Hosted on Netlify; DNS at GoDaddy.
   only; the page works fully with JS disabled
 - **Fonts:** Fraunces + Inter, self-hosted from `static/fonts/` via
   `@font-face` in `main.css` (no Google Fonts request)
-- **Contact form:** Netlify Forms (`data-netlify="true"`), no backend code
+- **Contact form:** posts to Web3Forms (`https://api.web3forms.com/submit`), no
+  backend code. Needs `params.web3forms_key` set in `config.toml` (free key from
+  web3forms.com; the build warns if empty). On success Web3Forms redirects to
+  `/obrigado/`. Honeypot: hidden `botcheck` checkbox.
 - **Analytics:** none
 
 ## Project Structure

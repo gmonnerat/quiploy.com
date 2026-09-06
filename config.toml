@@ -11,6 +11,9 @@ disableHugoGeneratorInject = true
   phone = "+55 21 99909-5870"
   phoneHref = "+5521999095870"
   cnpj = "23.612.194/0001-81"
+  # Contact form delivery (https://web3forms.com/ — free, no account, domain-lockable).
+  # Enter contato@quiploy.com there, paste the emailed key below, redeploy.
+  web3forms_key = ""
 
   [params.social]
     twitter = "https://twitter.com/quiploy"

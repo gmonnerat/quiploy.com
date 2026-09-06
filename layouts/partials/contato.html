@@ -10,15 +10,21 @@
       </ul>
     </div>
 
-    <form name="contato" method="POST" action="/obrigado/"
-          data-netlify="true" netlify-honeypot="bot-field" class="contato-form">
-      <input type="hidden" name="form-name" value="contato">
+    {{- $key := .Site.Params.web3forms_key -}}
+    {{- if not $key }}{{ warnf "config.toml params.web3forms_key is empty — the contact form will not deliver until it is set (free key at https://web3forms.com/)" }}{{ end -}}
+    <form method="POST" action="https://api.web3forms.com/submit" class="contato-form">
+      <input type="hidden" name="access_key" value="{{ $key }}">
+      <input type="hidden" name="subject" value="Novo contato pelo site — Quiploy">
+      <input type="hidden" name="from_name" value="Site Quiploy">
+      <input type="hidden" name="redirect" value="{{ "obrigado/" | absURL }}">
       <p class="hp-field" aria-hidden="true">
-        <label>Não preencha este campo: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        <label>Não preencha este campo:
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+        </label>
       </p>
       <p>
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" autocomplete="name" required>
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
       </p>
       <p>
         <label for="email">E-mail</label>

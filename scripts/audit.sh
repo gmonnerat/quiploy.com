@@ -17,8 +17,9 @@ check "no jquery/bootstrap/etc"         '! grep -rqiE "jquery|bootstrap|wow\.js|
 check "css fingerprinted + SRI"         'grep -Eq "href=\"/css/main\.min\.[0-9a-f]+\.css\"[^>]*integrity=\"sha512-" public/index.html'
 check "js fingerprinted + SRI"          'grep -Eq "src=\"/js/site\.min\.[0-9a-f]+\.js\"[^>]*integrity=\"sha512-" public/index.html'
 
-check "netlify form present"            'grep -q "data-netlify=\"true\"" public/index.html'
-check "form-name hidden input"          'grep -q "name=\"form-name\" value=\"contato\"" public/index.html'
+check "contact form posts to web3forms" 'grep -q "action=\"https://api.web3forms.com/submit\"" public/index.html'
+check "web3forms access_key field"      'grep -q "name=\"access_key\"" public/index.html'
+check "contact form fields present"     'grep -q "name=\"name\"" public/index.html && grep -q "name=\"email\"" public/index.html && grep -q "name=\"mensagem\"" public/index.html'
 
 check "lang pt-br home"                 'grep -q "<html lang=\"pt-br\"" public/index.html'
 check "lang pt-br 404"                  'grep -q "<html lang=\"pt-br\"" public/404.html'
