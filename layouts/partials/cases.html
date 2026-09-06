@@ -1,0 +1,22 @@
+<section class="section" id="cases">
+  <div class="container">
+    <h2 class="section-title">Cases</h2>
+    <div class="grid grid-2">
+      {{ range .Site.Data.cases.destaque }}
+      <article class="card case-card">
+        <h3>{{ .cliente }}</h3>
+        <p class="case-setor">{{ .setor }}</p>
+        <p>{{ .resumo }}</p>
+      </article>
+      {{ end }}
+    </div>
+    <div class="cases-outros">
+      <h3>E também</h3>
+      <ul>
+        {{ range .Site.Data.cases.outros }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</section>

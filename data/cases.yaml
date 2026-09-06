@@ -1,0 +1,39 @@
+destaque:
+  - cliente: "Tríade Patologia Veterinária"
+    setor: "Laboratório de patologia veterinária"
+    resumo: >-
+      Sistema de gestão de laboratório: cadastro de clientes e animais,
+      requisições de oito tipos de exame com numeração sequencial anual,
+      laudos em PDF com assinatura digital e fotomicrografias, e dashboards de
+      produtividade por tipo de exame, técnico e período.
+  - cliente: "Clínica Marcela Monnerat"
+    setor: "Clínica médica e estética"
+    resumo: >-
+      Plataforma de gestão clínica: prontuário, evoluções e prescrições,
+      agenda, pagamentos, recebíveis e comissões, controle de estoque,
+      emissão de NFS-e Nacional e comunicação com pacientes via WhatsApp.
+  - cliente: "Hidrocenter"
+    setor: "Materiais hidráulicos e construção civil"
+    resumo: >-
+      Gestão de propostas comerciais, obras em andamento com controle
+      financeiro (notas, serviços, instaladores e saldo da obra), almoxarifado
+      com movimentações e custo médio, e controle de acesso por perfil com
+      isolamento de dados por vendedor.
+  - cliente: "Donna Laser"
+    setor: "Locação de equipamentos a laser"
+    resumo: >-
+      Gestão de locação: contratos com dezenas de modelos, agenda de
+      equipamentos com arrastar-e-soltar, pagamentos parcelados, controle de
+      despesas e entregas, e assinatura de contrato por link com token.
+outros:
+  - >-
+    Automação fiscal e contábil para escritório de contabilidade — importação
+    de NF-e, apuração de créditos PIS/COFINS e consolidação do razão contábil
+    de três ERPs.
+  - >-
+    Recuperação e migração de sistema hospitalar legado — ambiente restaurado,
+    base de milhares de registros migrada e validada, seguida de manutenção
+    mensal com SLA.
+  - >-
+    Sistema de gestão financeira para organizações religiosas — membros,
+    contribuições, despesas e balanços mensais e anuais.

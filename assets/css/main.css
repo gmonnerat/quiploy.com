@@ -140,3 +140,8 @@ img { max-width: 100%; height: auto; display: block; }
 .prose { max-width: 65ch; }
 .prose p { margin-block: 0 1rem; }
 .muted { color: var(--muted); font-size: 0.95rem; }
+
+.case-setor { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.75rem; }
+.cases-outros { margin-top: 2.5rem; }
+.cases-outros ul { padding-left: 1.25rem; max-width: 70ch; }
+.cases-outros li { margin-bottom: 0.75rem; }
