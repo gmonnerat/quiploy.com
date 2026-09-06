@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="{{ .Site.LanguageCode }}">
+{{ partial "head.html" . }}
+<body>
+  {{ partial "nav.html" . }}
+  <main class="page-narrow">
+    <section class="section">
+      <div class="container prose">
+        <h1>{{ .Title }}</h1>
+        {{ .Content }}
+        <p><a class="btn" href="/">Voltar para a página inicial</a></p>
+      </div>
+    </section>
+  </main>
+  {{ partial "footer.html" . }}
+</body>
+</html>

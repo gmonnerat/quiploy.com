@@ -145,3 +145,18 @@ img { max-width: 100%; height: auto; display: block; }
 .cases-outros { margin-top: 2.5rem; }
 .cases-outros ul { padding-left: 1.25rem; max-width: 70ch; }
 .cases-outros li { margin-bottom: 0.75rem; }
+
+.hp-field { position: absolute; left: -9999px; }
+.contato-form p { margin: 0 0 1rem; }
+.contato-form label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; }
+.contato-form input,
+.contato-form textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--fg);
+}
+.social { list-style: none; padding: 0; display: flex; gap: 1rem; }
