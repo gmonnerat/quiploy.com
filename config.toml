@@ -2,6 +2,7 @@ baseURL = "https://www.quiploy.com/"
 languageCode = "pt-br"
 title = "Quiploy"
 enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
 
 [params]
   description = "Software sob medida e automação de processos para operações brasileiras."
@@ -33,3 +34,8 @@ enableRobotsTXT = true
   name = "Contato"
   url = "#contato"
   weight = 40
+
+[minify]
+  minifyOutput = true
+  [minify.tdewolff.html]
+    keepQuotes = true
