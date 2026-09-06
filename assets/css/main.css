@@ -1,99 +1,585 @@
+/* ==========================================================================
+   Quiploy — visual system
+   Direction: "livro-razão". The world these systems live in is Brazilian
+   business paperwork — fichas de laboratório, laudos, notas fiscais, razão
+   contábil. Cool bond-paper white, green-black ink, one deep ledger green,
+   and a single dark section that reads as the closed cover of the book.
+   No shadows, no gradients, no icons: structure comes from rules and space.
+   ========================================================================== */
+
+/* 1. Tokens ---------------------------------------------------------------- */
+
 :root {
-  --bg: #ffffff;
-  --fg: #14161a;
-  --muted: #5c636e;
-  --accent: #1f6feb;
-  --border: #e6e8ec;
-  --maxw: 1100px;
-  --space: clamp(3rem, 6vw, 5rem);
+  /* Colour — light ground */
+  --bg: #f8faf9;          /* bond paper, faintly cool */
+  --surface: #ffffff;     /* a ficha laid on the paper */
+  --alt: #eef3f0;         /* alternate section ground */
+  --fg: #10201a;          /* green-black ink */
+  --muted: #4e5f58;
+  --accent: #0f6b4f;      /* ledger green */
+  --accent-strong: #0a5240;
+  --on-accent: #ffffff;
+  --border: #dce4e0;      /* hairline */
+  --rule: #c6d2cc;        /* register rule, a touch stronger */
+
+  /* Form fields keep a paper ground in every context */
+  --field-bg: #ffffff;
+  --field-fg: #10201a;
+  --field-border: #b9c7c1;
+  --field-ring: #10201a;
+
+  /* Type */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-text: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --step--1: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --step-0:  clamp(1rem, 0.975rem + 0.13vw, 1.0625rem);
+  --step-1:  clamp(1.125rem, 1.08rem + 0.22vw, 1.25rem);
+  --step-2:  clamp(1.3125rem, 1.22rem + 0.46vw, 1.5625rem);
+  --step-3:  clamp(1.5rem, 1.32rem + 0.9vw, 2rem);
+  --step-4:  clamp(1.9375rem, 1.6rem + 1.85vw, 2.875rem);
+  --step-5:  clamp(2.4375rem, 1.62rem + 4.1vw, 4.25rem);
+
+  /* Space */
+  --sp-3xs: 0.25rem;
+  --sp-2xs: 0.5rem;
+  --sp-xs:  0.75rem;
+  --sp-s:   1rem;
+  --sp-m:   1.5rem;
+  --sp-l:   2.25rem;
+  --sp-xl:  3.25rem;
+  --sp-section: clamp(3.5rem, 8vw, 6.5rem);
+  --sp-gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  --maxw: 1100px;
+  --radius: 4px;
+  --radius-sm: 3px;
 }
 
-* { box-sizing: border-box; }
+/* 2. Dark section overrides ------------------------------------------------ */
+
+.section-dark {
+  --bg: #0c1a15;
+  --surface: #14261f;
+  --alt: #14261f;
+  --fg: #e7efea;
+  --muted: #a9bdb4;
+  --accent: #7fd4ac;
+  --accent-strong: #a5e4c6;
+  --on-accent: #08221a;
+  --border: #23372f;
+  --rule: #2c453b;
+  /* Sheets of the same paper, laid on the dark cover. */
+  --field-bg: #f7faf8;
+  --field-border: #14261f;
+}
+
+/* 3. Reset ----------------------------------------------------------------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  -webkit-text-size-adjust: 100%;
 }
 
-body {
+body,
+h1, h2, h3, h4,
+p, ul, ol, figure, blockquote {
   margin: 0;
+}
+
+ul, ol { padding: 0; }
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 4. Base elements --------------------------------------------------------- */
+
+body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-text);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; font-weight: 600; }
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  line-height: 1.1;
+  text-wrap: balance;
+}
 
-a { color: var(--accent); }
+h1 { font-size: var(--step-5); letter-spacing: -0.025em; }
+h2 { font-size: var(--step-4); letter-spacing: -0.02em; }
+h3 { font-size: var(--step-2); letter-spacing: -0.01em; line-height: 1.2; }
 
-img { max-width: 100%; height: auto; display: block; }
+p { text-wrap: pretty; }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration-color: currentColor;
+}
+
+/* 5. Layout ---------------------------------------------------------------- */
 
 .container {
   width: 100%;
   max-width: var(--maxw);
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  padding-inline: var(--sp-gutter);
+}
+
+.section {
+  padding-block: var(--sp-section);
+  background: var(--bg);
+  color: var(--fg);
+  scroll-margin-top: 4.5rem;
+}
+
+/* Hero and the first section share a ground: give the seam a hairline. */
+.hero + .section { border-top: 1px solid var(--border); }
+
+.section-alt { background: var(--alt); }
+
+.section-dark { background: var(--bg); color: var(--fg); }
+
+.section-title {
+  font-size: var(--step-4);
+  max-width: 22ch;
+  margin-bottom: clamp(2rem, 4.5vw, 3.25rem);
+}
+
+.grid {
+  display: grid;
+  gap: clamp(2rem, 4.5vw, 3.25rem) clamp(2rem, 5vw, 4rem);
+}
+
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.page-narrow {
+  display: flex;
+  align-items: center;
+  min-height: 62vh;
+}
+
+.page-narrow > .section { width: 100%; }
+
+.prose { max-width: 64ch; }
+
+.prose p { margin-bottom: 1em; }
+
+.prose > :last-child { margin-bottom: 0; }
+
+.prose h1 { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+
+.prose .btn { margin-top: var(--sp-s); }
+
+.muted {
+  color: var(--muted);
+  font-size: var(--step--1);
+  line-height: 1.6;
 }
 
 .visually-hidden {
   position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0);
-  white-space: nowrap; border: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+.hp-field {
+  position: absolute;
+  left: -9999px;
 }
+
+/* 6. Header and navigation -------------------------------------------------- */
 
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
+
 .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding-block: 0.75rem;
+  gap: var(--sp-s);
+  padding-block: var(--sp-xs);
 }
+
+.brand {
+  display: inline-flex;
+  line-height: 0;
+  border-radius: 2px;
+}
+
+/* The shipped mark is a white-on-transparent PNG; brightness(0) keeps its
+   alpha and lays it down as ink on the paper ground. */
+.brand img {
+  height: 44px;
+  width: auto;
+  aspect-ratio: 200 / 150;
+  filter: brightness(0);
+}
+
 .nav-menu ul {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.nav-menu a { color: var(--fg); text-decoration: none; }
+
+.nav-menu a {
+  color: var(--fg);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.nav-menu a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .nav-toggle { display: none; }
+
+/* 7. Hero ------------------------------------------------------------------- */
+
+.hero {
+  padding-block: clamp(4rem, 11vw, 8rem) clamp(3.25rem, 8vw, 5.5rem);
+  scroll-margin-top: 4.5rem;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: var(--sp-m);
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 2.25rem;
+  height: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+.hero h1 {
+  max-width: 20ch;
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
+}
+
+.hero-lead {
+  max-width: 48ch;
+  color: var(--muted);
+  font-size: var(--step-1);
+  line-height: 1.6;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+/* 8. Buttons ---------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  padding: 0.8em 1.5em;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--step-0);
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease,
+              border-color 140ms ease, transform 80ms ease;
+}
+
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: var(--on-accent);
+}
+
+/* 9. Cards ------------------------------------------------------------------ */
+
+.card h3 { margin-bottom: var(--sp-xs); }
+
+.card p {
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+/* Serviços read as peer entries in a register: a rule, then the entry.
+   No box — boxing four equal capabilities adds nothing to them. */
+.service-card {
+  border-top: 2px solid var(--fg);
+  padding-top: var(--sp-m);
+}
+
+/* Cases are discrete records — each one is a ficha lifted off the paper,
+   filed under its sector. The sector leads, as a filing classifier does. */
+.case-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  padding: clamp(1.5rem, 3.2vw, 2rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.case-card h3 {
+  order: 2;
+  margin: 0;
+}
+
+.case-card > p {
+  order: 3;
+  margin: 0;
+  max-width: none;
+}
+
+.case-card .case-setor {
+  order: 1;
+  margin: 0;
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.cases-outros {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  max-width: 72ch;
+}
+
+.cases-outros h3 { margin-bottom: var(--sp-s); }
+
+.cases-outros ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cases-outros li {
+  border-top: 1px solid var(--rule);
+  padding-block: var(--sp-s);
+  color: var(--muted);
+}
+
+.cases-outros li:last-child { border-bottom: 1px solid var(--rule); }
+
+/* 10. Sobre ----------------------------------------------------------------- */
+
+.prose .muted {
+  margin-top: var(--sp-m);
+  padding-top: var(--sp-s);
+  border-top: 1px solid var(--rule);
+}
+
+/* 11. Contato --------------------------------------------------------------- */
+
+.contato-info .section-title { margin-bottom: var(--sp-m); }
+
+.contato-info p {
+  margin-bottom: var(--sp-2xs);
+  font-size: var(--step-1);
+}
+
+.contato-info a { color: var(--accent); }
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-m);
+  list-style: none;
+  margin-top: var(--sp-m);
+  padding: 0;
+  font-size: var(--step--1);
+}
+
+.contato-form p { margin-bottom: var(--sp-s); }
+
+.contato-form label {
+  display: block;
+  margin-bottom: var(--sp-3xs);
+  color: var(--fg);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.contato-form input,
+.contato-form textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  background: var(--field-bg);
+  color: var(--field-fg);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+.contato-form textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.contato-form input::placeholder,
+.contato-form textarea::placeholder { color: #6b7a74; }
+
+/* Two rings: an ink ring on the white field, an accent halo on the ground
+   behind it — visible whichever side the field sits against. */
+.contato-form input:focus-visible,
+.contato-form textarea:focus-visible {
+  outline: 2px solid var(--field-ring);
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px var(--accent);
+}
+
+.contato-form .btn { margin-top: var(--sp-2xs); }
+
+/* 12. Footer ---------------------------------------------------------------- */
+
+.site-footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding-block: var(--sp-l);
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.site-footer p + p { margin-top: var(--sp-3xs); }
+
+.site-footer a { color: var(--muted); }
+
+.site-footer a:hover { color: var(--accent); }
+
+/* 13. Motion ---------------------------------------------------------------- */
+
+/* One gesture, repeated: each section settles the last few pixels into place
+   as it arrives. Deliberately no opacity fade — text that is on screen is
+   always at full contrast, and the rise alone reads as a settle rather than
+   the usual fade-up parade. Scroll-driven, so it never runs unprompted. */
+@keyframes section-settle {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    main:not(.page-narrow) > .section > .container {
+      animation: section-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 24%;
+    }
+  }
+}
+
+/* 14. Narrow screens (single breakpoint) ------------------------------------ */
 
 @media (max-width: 720px) {
   .nav-toggle {
     display: inline-flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+    gap: 5px;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    padding: 0;
     background: none;
     border: 0;
-    padding: 0.5rem;
+    border-radius: var(--radius-sm);
     cursor: pointer;
   }
+
   .nav-toggle-bar {
+    display: block;
     width: 22px;
     height: 2px;
     background: var(--fg);
+    border-radius: 1px;
   }
+
   .nav-menu {
     display: none;
     position: absolute;
@@ -102,70 +588,39 @@ img { max-width: 100%; height: auto; display: block; }
     top: 100%;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px -18px rgb(16 32 26 / 0.5);
   }
+
   .nav-menu.is-open { display: block; }
-  .nav-menu ul { flex-direction: column; gap: 0; }
-  .nav-menu li { padding: 0.25rem clamp(1.25rem, 4vw, 2.5rem); }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--sp-2xs) var(--sp-gutter) var(--sp-s);
+  }
+
+  .nav-menu li + li { border-top: 1px solid var(--border); }
+
+  .nav-menu a {
+    display: block;
+    font-size: var(--step-0);
+    padding-block: 0.7rem;
+    border-bottom: 0;
+  }
+
+  .nav-menu a:hover { border-bottom: 0; }
+
+  .grid-2 { grid-template-columns: minmax(0, 1fr); }
+
+  .hero h1 { max-width: 16ch; }
+
+  .brand img { height: 38px; }
+
+  .page-narrow { min-height: 0; }
 }
 
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: 500;
-  text-decoration: none;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+@media (min-width: 721px) {
+  /* The form is the working half of Contato; give it the wider column. */
+  .section-dark .grid-2 { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
 }
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-}
-.hero { padding-block: var(--space); }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); max-width: 18ch; }
-.hero-lead { font-size: 1.125rem; max-width: 60ch; color: var(--muted); }
-.eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; color: var(--muted); margin: 0 0 0.5rem; }
-
-.section { padding-block: var(--space); border-top: 1px solid var(--border); }
-.section-title { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 2rem; }
-.grid { display: grid; gap: 1.5rem; }
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.card { padding: 1.5rem; border: 1px solid var(--border); border-radius: 6px; }
-.card h3 { margin-top: 0; }
-@media (max-width: 720px) {
-  .grid-2 { grid-template-columns: 1fr; }
-}
-
-.section-alt { background: #f7f8fa; }
-.prose { max-width: 65ch; }
-.prose p { margin-block: 0 1rem; }
-.muted { color: var(--muted); font-size: 0.95rem; }
-
-.case-setor { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.75rem; }
-.cases-outros { margin-top: 2.5rem; }
-.cases-outros ul { padding-left: 1.25rem; max-width: 70ch; }
-.cases-outros li { margin-bottom: 0.75rem; }
-
-.hp-field { position: absolute; left: -9999px; }
-.contato-form p { margin: 0 0 1rem; }
-.contato-form label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; }
-.contato-form input,
-.contato-form textarea {
-  width: 100%;
-  padding: 0.6rem 0.75rem;
-  font: inherit;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: #fff;
-  color: var(--fg);
-}
-.social { list-style: none; padding: 0; display: flex; gap: 1rem; }
-
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding-block: 2rem;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-.site-footer p { margin: 0.25rem 0; }
-.page-narrow { min-height: 60vh; }
