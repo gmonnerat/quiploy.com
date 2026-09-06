@@ -135,3 +135,8 @@ img { max-width: 100%; height: auto; display: block; }
 @media (max-width: 720px) {
   .grid-2 { grid-template-columns: 1fr; }
 }
+
+.section-alt { background: #f7f8fa; }
+.prose { max-width: 65ch; }
+.prose p { margin-block: 0 1rem; }
+.muted { color: var(--muted); font-size: 0.95rem; }
