@@ -22,7 +22,7 @@ disableHugoGeneratorInject = true
   weight = 10
 
 [[menus.main]]
-  name = "Cases"
+  name = "Casos de uso"
   url = "#cases"
   weight = 20
 
