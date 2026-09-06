@@ -6,8 +6,10 @@
   <main>
     {{ partial "hero.html" . }}
     {{ partial "servicos.html" . }}
+    {{ partial "cta.html" (dict "ctx" . "line" "Tem um processo manual consumindo o time? A gente automatiza.") }}
     {{ partial "sobre.html" . }}
     {{ partial "cases.html" . }}
+    {{ partial "cta.html" (dict "ctx" . "variant" "band" "line" "Quer ver o que dá para construir no seu caso?") }}
     {{ partial "contato.html" . }}
   </main>
   {{ partial "footer.html" . }}

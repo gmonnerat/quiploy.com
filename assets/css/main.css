@@ -1,10 +1,17 @@
 /* ==========================================================================
    Quiploy — visual system
-   Direction: "livro-razão". The world these systems live in is Brazilian
-   business paperwork — fichas de laboratório, laudos, notas fiscais, razão
-   contábil. Cool bond-paper white, green-black ink, one deep ledger green,
-   and a single dark section that reads as the closed cover of the book.
-   No shadows, no gradients, no icons: structure comes from rules and space.
+   Direction: "livro-razão carimbado". The world these systems live in is
+   Brazilian business paperwork — fichas de laboratório, laudos, notas
+   fiscais, razão contábil. Cool bond-paper white, green-black ink, one
+   saturated ledger green, and a dark closing section that reads as the shut
+   cover of the book. What changed in this pass: the ink got heavier. The
+   green is no longer only a hairline and a link colour — it lands as thick
+   top rules, as solid buttons, and once as a full-bleed block stamped
+   across the page. Display type is set large at a high optical size so the
+   headline carries the page on its own.
+   Still no shadows, no gradients, no icons: structure comes from rules,
+   weight and space. Deliberately no second hue — the boldness is spent on
+   one colour used hard, which is why the green reads as a decision.
    ========================================================================== */
 
 /* 0. Fonts ------------------------------------------------------------------
@@ -54,17 +61,21 @@
 /* 1. Tokens ---------------------------------------------------------------- */
 
 :root {
-  /* Colour — light ground */
-  --bg: #f8faf9;          /* bond paper, faintly cool */
+  /* Colour — light ground.
+     Contrast (WCAG, computed): fg/bg 16.9, muted/bg 7.3, muted/alt 6.6,
+     accent/bg 6.2, accent/alt 5.7, white/accent 6.6, white/accent-vivid 5.4. */
+  --bg: #f7faf8;          /* bond paper, faintly cool */
   --surface: #ffffff;     /* a ficha laid on the paper */
-  --alt: #eef3f0;         /* alternate section ground */
-  --fg: #10201a;          /* green-black ink */
-  --muted: #4e5f58;
-  --accent: #0f6b4f;      /* ledger green */
-  --accent-strong: #0a5240;
+  --alt: #e9f0ec;         /* alternate section ground, a shade deeper now */
+  --fg: #0d1b16;          /* green-black ink */
+  --muted: #46574f;
+  --accent: #076b46;      /* ledger green, pushed to full saturation */
+  --accent-strong: #054d33;
+  --accent-vivid: #0e7a52; /* the stamped block — brighter, still AA on white */
+  --accent-wash: #dfece6;  /* the palest tint of the same ink */
   --on-accent: #ffffff;
-  --border: #dce4e0;      /* hairline */
-  --rule: #c6d2cc;        /* register rule, a touch stronger */
+  --border: #d6e0db;      /* hairline */
+  --rule: #bccbc4;        /* register rule, a touch stronger */
 
   /* Form fields keep a paper ground in every context */
   --field-bg: #ffffff;
@@ -80,8 +91,9 @@
   --step-0:  clamp(1rem, 0.975rem + 0.13vw, 1.0625rem);
   --step-1:  clamp(1.125rem, 1.08rem + 0.22vw, 1.25rem);
   --step-2:  clamp(1.3125rem, 1.22rem + 0.46vw, 1.5625rem);
-  --step-4:  clamp(1.9375rem, 1.6rem + 1.85vw, 2.875rem);
-  --step-5:  clamp(2.4375rem, 1.62rem + 4.1vw, 4.25rem);
+  --step-3:  clamp(1.5rem, 1.32rem + 0.9vw, 2rem);
+  --step-4:  clamp(2.125rem, 1.72rem + 2.05vw, 3.375rem);
+  --step-5:  clamp(2.5rem, 1.53rem + 4.85vw, 5.25rem);
 
   /* Space */
   --sp-3xs: 0.25rem;
@@ -108,6 +120,8 @@
   --muted: #a9bdb4;
   --accent: #7fd4ac;
   --accent-strong: #a5e4c6;
+  --accent-vivid: #7fd4ac;
+  --accent-wash: #1b3229;
   --on-accent: #08221a;
   --border: #23372f;
   --rule: #2c453b;
@@ -185,9 +199,11 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-h1 { font-size: var(--step-5); letter-spacing: -0.025em; }
-h2 { font-size: var(--step-4); letter-spacing: -0.02em; }
-h3 { font-size: var(--step-2); letter-spacing: -0.01em; line-height: 1.2; }
+/* Display sizes are set large, so the tracking comes in and the leading
+   closes up — at 84px the default 1.1 leading opens holes between lines. */
+h1 { font-size: var(--step-5); letter-spacing: -0.035em; line-height: 1.02; }
+h2 { font-size: var(--step-4); letter-spacing: -0.028em; line-height: 1.06; }
+h3 { font-size: var(--step-2); letter-spacing: -0.012em; line-height: 1.2; }
 
 p { text-wrap: pretty; }
 
@@ -225,10 +241,23 @@ a:hover {
 
 .section-alt { background: var(--alt); }
 
+/* On a one-page site the anchor nav drops people mid-document, so a section
+   start is real structure worth marking: a short heavy accent bar, the same
+   stamped mark as the hero, sized to say "new section" and nothing else. */
 .section-title {
   font-size: var(--step-4);
-  max-width: 22ch;
+  max-width: 20ch;
   margin-bottom: clamp(2rem, 4.5vw, 3.25rem);
+}
+
+.section-title::before {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 5px;
+  margin-bottom: var(--sp-m);
+  background: var(--accent);
+  border-radius: 1px;
 }
 
 .grid {
@@ -346,9 +375,15 @@ a:hover {
 
 /* 7. Hero ------------------------------------------------------------------- */
 
+/* The hero ground is the paper's own colour with a single faint wash pulled
+   up from the top-left corner — enough to stop the headline floating on flat
+   white, far short of a gradient panel. */
 .hero {
-  padding-block: clamp(4rem, 11vw, 8rem) clamp(3.25rem, 8vw, 5.5rem);
+  padding-block: clamp(3.5rem, 9vw, 6.5rem) clamp(3rem, 7vw, 5rem);
   scroll-margin-top: 4.5rem;
+  background:
+    radial-gradient(60rem 34rem at 8% -10%,
+      var(--accent-wash) 0%, transparent 62%);
 }
 
 .eyebrow {
@@ -358,29 +393,60 @@ a:hover {
   margin-bottom: var(--sp-m);
   color: var(--accent);
   font-size: var(--step--1);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 
 .eyebrow::before {
   content: "";
   width: 2.25rem;
-  height: 1px;
+  height: 5px;
   background: currentColor;
+  border-radius: 1px;
   flex: none;
+  transform-origin: left center;
 }
 
 .hero h1 {
-  max-width: 20ch;
-  margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
+  max-width: 15ch;
+  margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
 }
 
 .hero-lead {
-  max-width: 48ch;
+  max-width: 46ch;
   color: var(--muted);
   font-size: var(--step-1);
   line-height: 1.6;
-  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+/* 7b. Hero CTAs and trust strip -------------------------------------------- */
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-s);
+}
+
+/* The strip is a ledger line: rule, classifier, then the entries. */
+.hero-trust {
+  margin-top: clamp(2.25rem, 5vw, 3.25rem);
+  padding-top: var(--sp-s);
+  border-top: 1px solid var(--rule);
+  max-width: 62ch;
+}
+
+.hero-trust-label {
+  color: var(--muted);
+  font-size: var(--step--1);
+  margin-bottom: var(--sp-3xs);
+}
+
+.hero-trust-names {
+  color: var(--fg);
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1.7;
 }
 
 /* 8. Buttons ---------------------------------------------------------------- */
@@ -388,17 +454,18 @@ a:hover {
 .btn {
   display: inline-block;
   padding: 0.8em 1.5em;
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   border-radius: var(--radius);
   background: transparent;
   color: var(--accent);
   font-size: var(--step-0);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.005em;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 140ms ease, color 140ms ease,
-              border-color 140ms ease, transform 80ms ease;
+              border-color 140ms ease, transform 120ms ease;
 }
 
 .btn:hover {
@@ -421,6 +488,28 @@ a:hover {
   color: var(--on-accent);
 }
 
+/* The ghost sits next to a solid block of ink, so it is drawn in ink-black
+   rather than green — two greens side by side would read as one hesitant
+   pair instead of a clear first and second choice. */
+.btn-ghost {
+  border-color: var(--fg);
+  color: var(--fg);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+
+/* The two decision points on the page — hero and the closing band — get the
+   larger button. Everything else stays at base size. */
+.btn-lg {
+  padding: 0.95em 1.9em;
+  font-size: var(--step-1);
+}
+
 /* 9. Cards ------------------------------------------------------------------ */
 
 .card h3 { margin-bottom: var(--sp-xs); }
@@ -430,11 +519,26 @@ a:hover {
   max-width: 46ch;
 }
 
-/* Serviços read as peer entries in a register: a rule, then the entry.
+/* Hover answers the pointer rather than announcing itself: the card lifts by
+   two pixels and its rule takes the full accent. No shadow — this palette
+   has never used one, and adding one here would break the paper. */
+.card {
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+@media (hover: hover) {
+  .card:hover { transform: translateY(-2px); }
+}
+
+/* Serviços read as peer entries in a register: a heavy rule, then the entry.
    No box — boxing four equal capabilities adds nothing to them. */
 .service-card {
-  border-top: 2px solid var(--fg);
+  border-top: 5px solid var(--fg);
   padding-top: var(--sp-m);
+}
+
+@media (hover: hover) {
+  .service-card:hover { border-top-color: var(--accent); }
 }
 
 /* Cases are discrete records — each one is a ficha lifted off the paper,
@@ -446,8 +550,12 @@ a:hover {
   padding: clamp(1.5rem, 3.2vw, 2rem);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-top: 2px solid var(--accent);
+  border-top: 5px solid var(--accent);
   border-radius: var(--radius-sm);
+}
+
+@media (hover: hover) {
+  .case-card:hover { border-color: var(--accent); }
 }
 
 .case-card h3 {
@@ -490,6 +598,65 @@ a:hover {
 }
 
 .cases-outros li:last-child { border-bottom: 1px solid var(--rule); }
+
+/* 9b. Repeated CTAs --------------------------------------------------------- */
+
+/* Two asks, deliberately unequal. The first is a ledger line drawn across the
+   page between two sections — quiet, easy to scroll past. The second is the
+   stamp: a full-bleed block of ink after the evidence, where the page has
+   earned the right to ask. */
+.cta {
+  padding-block: clamp(2.25rem, 5vw, 3.25rem);
+  background: var(--bg);
+  border-block: 1px solid var(--rule);
+}
+
+.cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-m);
+}
+
+.cta-line {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.cta-band {
+  /* A local palette, so .btn and friends need no override of their own. */
+  --bg: var(--accent-vivid);
+  --fg: #ffffff;
+  --accent: #ffffff;
+  --accent-strong: #ffffff;
+  --on-accent: #0a4d33;
+
+  padding-block: clamp(3rem, 7vw, 4.75rem);
+  background: var(--accent-vivid);
+  color: #ffffff;
+  border-block: 0;
+}
+
+.cta-band .cta-line { font-size: var(--step-4); max-width: 22ch; }
+
+.cta-band .btn-primary {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0a4d33;
+}
+
+.cta-band .btn-primary:hover {
+  background: #0a4d33;
+  border-color: #ffffff;
+  color: #ffffff;
+}
 
 /* 10. Sobre ----------------------------------------------------------------- */
 
@@ -583,13 +750,26 @@ a:hover {
   to { transform: none; }
 }
 
+/* The one non-scroll gesture on the page: the accent bar under the wordmark
+   strikes across on load, like a stamp coming down. It runs once, it is 380ms
+   long, and nothing else animates unprompted. */
+@keyframes rule-strike {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    main:not(.page-narrow) > .section > .container {
+    main:not(.page-narrow) > .section > .container,
+    main:not(.page-narrow) > .cta > .container {
       animation: section-settle linear both;
       animation-timeline: view();
       animation-range: entry 2% entry 24%;
     }
+  }
+
+  .eyebrow::before {
+    animation: rule-strike 380ms cubic-bezier(0.2, 0.75, 0.3, 1) both;
   }
 }
 
@@ -661,7 +841,19 @@ a:hover {
   .section-dark .grid-2,
   .grid-2 { grid-template-columns: minmax(0, 1fr); }
 
-  .hero h1 { max-width: 16ch; }
+  .hero h1 { max-width: none; }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta-inner { align-items: flex-start; }
+
+  .section-title::before {
+    width: 2.75rem;
+    height: 4px;
+  }
 
   .brand img { height: 38px; }
 

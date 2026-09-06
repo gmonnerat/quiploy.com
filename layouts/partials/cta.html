@@ -1,0 +1,11 @@
+{{/*
+  Reusable call to action.
+  Params: line (required), variant ("band" for the full-bleed accent block).
+  Usage: {{ partial "cta.html" (dict "line" "…" "variant" "band" "ctx" .) }}
+*/}}
+<section class="cta{{ with .variant }} cta-{{ . }}{{ end }}">
+  <div class="container cta-inner">
+    <p class="cta-line">{{ .line }}</p>
+    <a class="btn btn-primary btn-lg" href="#contato">Fale com a gente</a>
+  </div>
+</section>
