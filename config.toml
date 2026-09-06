@@ -1,3 +1,35 @@
-baseURL = "https://www.quiploy.com"
+baseURL = "https://www.quiploy.com/"
+languageCode = "pt-br"
 title = "Quiploy"
-theme = "Knight"
+enableRobotsTXT = true
+
+[params]
+  description = "Software sob medida e automação de processos para operações brasileiras."
+  email = "contato@quiploy.com"
+  phone = "+55 21 99909-5870"
+  phoneHref = "+5521999095870"
+  cnpj = "23.612.194/0001-81"
+
+  [params.social]
+    twitter = "https://twitter.com/quiploy"
+    instagram = "https://www.instagram.com/quiployhq"
+
+[[menus.main]]
+  name = "Serviços"
+  url = "#servicos"
+  weight = 10
+
+[[menus.main]]
+  name = "Cases"
+  url = "#cases"
+  weight = 20
+
+[[menus.main]]
+  name = "Sobre"
+  url = "#sobre"
+  weight = 30
+
+[[menus.main]]
+  name = "Contato"
+  url = "#contato"
+  weight = 40
