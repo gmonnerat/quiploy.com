@@ -248,13 +248,12 @@ No test framework exists and none is added (static marketing page). Verification
 
 1. **Hugo version pin** — confirm `HUGO_VERSION` against what Netlify
    currently offers and what's installed locally.
-2. **Logo** — reuse existing `logo.png` as-is, or is a redraw wanted?
-   (Assumed: reuse. Out of scope otherwise.)
+2. ~~Logo~~ — **Decided: reuse existing `logo.png` as-is.**
 3. **Fonts** — specific families chosen during the frontend-design pass;
    spec assumes two Google Fonts families.
 4. **Dark section placement** — hero vs. contato. Decided during design.
-5. **`/obrigado/` page vs. inline success state** — spec picks the
-   dedicated page for reliability; confirm that's acceptable UX.
+5. ~~`/obrigado/` page vs. inline success state~~ — **Decided: dedicated
+   `/obrigado/` page.**
 
 ## 9. Security note (unrelated to this work)
 
