@@ -1,0 +1,13 @@
+<section class="section" id="servicos">
+  <div class="container">
+    <h2 class="section-title">Serviços</h2>
+    <div class="grid grid-2">
+      {{ range .Site.Data.servicos }}
+      <article class="card service-card">
+        <h3>{{ .title }}</h3>
+        <p>{{ .description }}</p>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>

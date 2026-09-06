@@ -125,3 +125,13 @@ img { max-width: 100%; height: auto; display: block; }
 .hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); max-width: 18ch; }
 .hero-lead { font-size: 1.125rem; max-width: 60ch; color: var(--muted); }
 .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; color: var(--muted); margin: 0 0 0.5rem; }
+
+.section { padding-block: var(--space); border-top: 1px solid var(--border); }
+.section-title { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 2rem; }
+.grid { display: grid; gap: 1.5rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.card { padding: 1.5rem; border: 1px solid var(--border); border-radius: 6px; }
+.card h3 { margin-top: 0; }
+@media (max-width: 720px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
